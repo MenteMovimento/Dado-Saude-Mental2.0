@@ -2,338 +2,305 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dado da Paz — Saúde Mental Digital</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Dado da Saúde Mental - RV</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Roboto, Arial, Helvetica, sans-serif;
-    }
-
-    :root {
-      --azul-escuro: #0f2d66;
-      --abranda: #f26a00;
-      --respira: #007bd1;
-      --escuta: #f5b800;
-      --equilibra: #3c8f25;
-      --cuida: #e11d25;
-      --recomeca: #009c9c;
-      --fundo: #f5f8fc;
-      --texto: #111827;
-      --cinza: #475569;
-      --linha: #cbd5e1;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
-      min-height: 100vh;
-      background: radial-gradient(circle at 10% 20%, rgba(0, 123, 209, 0.08), transparent 50%),
-                  radial-gradient(circle at 90% 80%, rgba(0, 156, 156, 0.08), transparent 50%),
-                  var(--fundo);
-      color: var(--texto);
-      padding: 24px 20px 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      margin: 0;
+      overflow: hidden;
+      background: #0f2d66;
+      font-family: 'Segoe UI', sans-serif;
     }
-
-    .app {
-      max-width: 800px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 32px;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 6px;
-    }
-
-    header h1 {
-      font-size: clamp(32px, 5vw, 56px);
-      letter-spacing: 3px;
-      color: var(--azul-escuro);
-      line-height: 1.1;
-      font-weight: 800;
-    }
-
-    header p {
-      font-size: clamp(16px, 1.6vw, 20px);
-      color: #1e293b;
-      margin-top: 6px;
-    }
-
-    .cubo-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
-      width: 100%;
-    }
-
-    .area-3d {
-      width: min(400px, 80vw);
-      height: min(400px, 80vw);
-      perspective: 1200px;
-      margin: 0 auto;
-    }
-
-    .cubo {
-      --tam: min(400px, 80vw);
-      --metade: calc(var(--tam) / 2);
-      width: var(--tam);
-      height: var(--tam);
-      position: relative;
-      transform-style: preserve-3d;
-      transform: rotateX(-90deg) rotateY(0deg);
-      transition: transform 3.2s cubic-bezier(0.12, 0.75, 0.25, 1);
-      cursor: pointer;
-      margin: 0 auto;
-    }
-
-    .face {
+    #info {
       position: absolute;
-      width: var(--tam);
-      height: var(--tam);
-      background: #ffffff;
-      border: clamp(8px, 1.8vw, 12px) solid #94a3b8;
-      border-radius: clamp(24px, 6vw, 32px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      backface-visibility: hidden;
-      user-select: none;
-      padding: clamp(14px, 4vw, 28px);
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.02), 0 12px 28px rgba(15, 45, 102, 0.12);
-    }
-
-    .face img {
-      width: 44%;
-      height: 44%;
-      object-fit: contain;
-      margin-bottom: clamp(12px, 3vw, 20px);
-      pointer-events: none;
-    }
-
-    .nome-face {
-      font-size: clamp(24px, 6vw, 36px);
-      font-weight: 900;
-      letter-spacing: 2px;
-      line-height: 1;
-    }
-
-    .frente   { transform: rotateY(0deg)    translateZ(var(--metade)); border-color: var(--cuida);    color: var(--cuida); }
-    .tras     { transform: rotateY(180deg)  translateZ(var(--metade)); border-color: var(--recomeca); color: var(--recomeca); }
-    .direita  { transform: rotateY(90deg)   translateZ(var(--metade)); border-color: var(--escuta);   color: var(--escuta); }
-    .esquerda { transform: rotateY(-90deg)  translateZ(var(--metade)); border-color: var(--equilibra); color: var(--equilibra); }
-    .cima     { transform: rotateX(90deg)   translateZ(var(--metade)); border-color: var(--abranda);  color: var(--abranda); }
-    .baixo    { transform: rotateX(-90deg)  translateZ(var(--metade)); border-color: var(--respira);  color: var(--respira); }
-
-    .btns-cubo {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-top: 2px;
-    }
-
-    button {
-      border: none;
-      padding: 14px 28px;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 6px 16px rgba(15, 45, 102, 0.18);
-      color: #fff;
-    }
-
-    button:hover {
-      transform: translateY(-3px);
-    }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    #btnGirar {
-      background: var(--azul-escuro);
+      top: 20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: white;
       font-size: 18px;
-      padding: 18px 36px;
-      box-shadow: 0 8px 24px rgba(15, 45, 102, 0.35);
-      letter-spacing: 1px;
-      border: 2px solid transparent;
+      font-weight: bold;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      pointer-events: none;
+      z-index: 10;
+      padding: 0 20px;
     }
-
-    #btnGirar:hover {
-      background: #1a4a8a;
+    #info small {
+      font-weight: normal;
+      opacity: 0.8;
     }
-
-    .btn-secundario {
-      background: #475569;
-    }
-    .btn-secundario:hover { background: #334155; }
-
-    .estado-atual {
-      margin-top: 8px;
-      padding: 14px 18px;
-      background: #f1f5f9;
-      border: 2px solid #e2e8f0;
-      border-radius: 20px;
-      color: #1e293b;
-      font-weight: 500;
-      font-size: 15px;
-      width: 100%;
-      max-width: 400px;
+    #resultado {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.9);
+      padding: 16px 28px;
+      border-radius: 40px;
+      color: #0f2d66;
+      font-size: 22px;
+      font-weight: 800;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      display: none;
+      z-index: 10;
       text-align: center;
+      white-space: nowrap;
+      border: 3px solid #f5b800;
     }
-
-    .resultado {
-      margin-top: 16px;
-      padding: 16px 20px;
-      background: #ffffff;
-      border: 2px solid var(--linha);
-      border-radius: 20px;
-      color: #1e293b;
-      font-size: 16px;
-      text-align: center;
-      max-width: 500px;
-      width: 100%;
-    }
-
-    .resultado strong {
+    #resultado span {
       display: block;
-      font-size: 20px;
-      margin-bottom: 6px;
+      font-weight: 400;
+      font-size: 14px;
+      color: #475569;
+      margin-top: 4px;
     }
-
-    @media (max-width: 700px) {
-      .app {
-        gap: 20px;
-      }
-      .btns-cubo {
-        flex-direction: column;
-        align-items: center;
-      }
-      button {
-        width: 100%;
-        max-width: 280px;
-      }
+    @media (max-width: 600px) {
+      #resultado { font-size: 18px; padding: 12px 20px; white-space: normal; }
+      #info { font-size: 14px; top: 10px; }
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <header>
-      <h1>🧠 DADO DA SAÚDE MENTAL</h1>
-      <p>Dado da Paz · Versão Digital</p>
-      <p style="font-weight: 700; color: var(--azul-escuro); background: #e6edf8; display: inline-block; padding: 0 20px; border-radius: 40px;">Gira o dado. Faz uma pausa. Cuida de ti.</p>
-    </header>
+  <div id="info">🧠 Dado da Saúde Mental <small>— Toca no ecrã para girar</small></div>
+  <div id="resultado">🎲 <strong id="faceNome">CUIDA</strong><span id="faceDesc">Uma pequena ação de cuidado</span></div>
 
-    <div class="cubo-wrapper">
-      <div class="area-3d">
-        <div class="cubo" id="cubo">
-          <div class="face frente"><img src="cuida.jpeg" alt="CUIDA"><div class="nome-face">CUIDA</div></div>
-          <div class="face tras"><img src="recomeca.jpeg" alt="RECOMEÇA"><div class="nome-face">RECOMEÇA</div></div>
-          <div class="face direita"><img src="escuta.jpeg" alt="ESCUTA"><div class="nome-face">ESCUTA</div></div>
-          <div class="face esquerda"><img src="equilibra.jpeg" alt="EQUILIBRA"><div class="nome-face">EQUILIBRA</div></div>
-          <div class="face cima"><img src="abranda.jpeg" alt="ABRANDA"><div class="nome-face">ABRANDA</div></div>
-          <div class="face baixo"><img src="respira.jpeg" alt="RESPIRA"><div class="nome-face">RESPIRA</div></div>
-        </div>
-      </div>
+  <!-- Importação da biblioteca Three.js + VR -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.152.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.152.0/examples/jsm/"
+      }
+    }
+  </script>
 
-      <div class="btns-cubo">
-        <button id="btnGirar">🎲 Girar dado</button>
-        <button id="btnReset" class="btn-secundario">↺ Reset</button>
-      </div>
+  <script type="module">
+    import * as THREE from 'three';
+    import { VRButton } from 'three/addons/webxr/VRButton.js';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-      <div class="estado-atual" id="estadoAtual">Dado parado — clica em "Girar" para rodar.</div>
+    // Configuração da cena
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0f2d66);
+
+    // Câmara
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 1.5, 5);
+    camera.lookAt(0, 0, 0);
+
+    // Renderizador
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.xr.enabled = true;
+    document.body.appendChild(renderer.domElement);
+
+    // Botão de RV (modo binocular / telemóvel no óculos)
+    document.body.appendChild(VRButton.createButton(renderer));
+
+    // Luzes
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+    dirLight.position.set(2, 5, 3);
+    scene.add(dirLight);
+    const backLight = new THREE.DirectionalLight(0x4488ff, 0.5);
+    backLight.position.set(-2, 0, -3);
+    scene.add(backLight);
+
+    // ----- CRIAR O DADO 3D -----
+    const tamanho = 1.8;
+    const geometry = new THREE.BoxGeometry(tamanho, tamanho, tamanho);
+    
+    // Cores e nomes das faces
+    const facesData = [
+      { nome: 'CUIDA',    cor: 0xe11d25, desc: 'Beber água, descansar, pedir ajuda' },
+      { nome: 'RECOMEÇA', cor: 0x009c9c, desc: 'Tenta outra vez com calma' },
+      { nome: 'ESCUTA',   cor: 0xf5b800, desc: 'Atenção sem pressa' },
+      { nome: 'EQUILIBRA',cor: 0x3c8f25, desc: 'Larga o que pesa, mantém o que ajuda' },
+      { nome: 'ABRANDA',  cor: 0xf26a00, desc: 'Abranda o ritmo antes de agir' },
+      { nome: 'RESPIRA',  cor: 0x007bd1, desc: 'Inspira 4s, expira 6s' }
+    ];
+
+    // Criar materiais para cada face (com texto)
+    const materials = facesData.map(f => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+
+      // Fundo
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, 512, 512);
       
-      <div class="resultado" id="resultado" style="display: none;">
-        <strong id="resultadoNome" style="color: var(--azul-escuro);">—</strong>
-        <span id="resultadoDescricao">A prática aparece aqui depois de girar.</span>
-      </div>
-    </div>
-  </div>
+      // Borda colorida
+      ctx.strokeStyle = '#' + f.cor.toString(16).padStart(6, '0');
+      ctx.lineWidth = 20;
+      ctx.strokeRect(20, 20, 472, 472);
 
-  <script>
-    (function() {
-      const cubo = document.getElementById("cubo");
-      const btnGirar = document.getElementById("btnGirar");
-      const btnReset = document.getElementById("btnReset");
-      const estadoAtual = document.getElementById("estadoAtual");
-      const resultadoDiv = document.getElementById("resultado");
-      const resultadoNome = document.getElementById("resultadoNome");
-      const resultadoDescricao = document.getElementById("resultadoDescricao");
+      // Nome grande
+      ctx.fillStyle = '#' + f.cor.toString(16).padStart(6, '0');
+      ctx.font = 'bold 80px Segoe UI, Arial';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(f.nome, 256, 220);
 
-      let aGirar = false;
-      let voltasExtra = 0;
-      let sorteadoAtual = null;
+      // Descrição pequena
+      ctx.fillStyle = '#334155';
+      ctx.font = '28px Segoe UI, Arial';
+      ctx.fillText(f.desc, 256, 340);
 
-      const opcoes = [
-        { nome: "ABRANDA", cor: "#f26a00", descricao: "Abranda o ritmo antes de agir. Fecha os olhos 30s." },
-        { nome: "RESPIRA", cor: "#007bd1", descricao: "Regula o corpo e a mente. Inspira 4s, expira 6s." },
-        { nome: "EQUILIBRA", cor: "#3c8f25", descricao: "Equilíbrio entre o que pesa e o que ajuda." },
-        { nome: "CUIDA", cor: "#e11d25", descricao: "Uma pequena ação de cuidado. Beber água, descansar." },
-        { nome: "ESCUTA", cor: "#f5b800", descricao: "Atenção sem pressa. Escuta um som à tua volta." },
-        { nome: "RECOMEÇA", cor: "#009c9c", descricao: "Tenta outra vez com calma. Pensa em recomeçar." }
-      ];
+      // Emoji
+      ctx.font = '60px Arial';
+      ctx.fillText('🧠', 256, 100);
 
-      function girarCubo() {
-        if (aGirar) return;
-        aGirar = true;
-        btnGirar.disabled = true;
-        estadoAtual.textContent = "🎲 A girar... prepara-te!";
-        resultadoDiv.style.display = "none";
+      const texture = new THREE.CanvasTexture(canvas);
+      return new THREE.MeshStandardMaterial({ map: texture, roughness: 0.3, metalness: 0.1 });
+    });
 
-        const sorteado = opcoes[Math.floor(Math.random() * opcoes.length)];
-        sorteadoAtual = sorteado;
-        voltasExtra += 360 * 4;
+    const dice = new THREE.Mesh(geometry, materials);
+    dice.position.y = 0.2;
+    scene.add(dice);
 
-        let tf = "";
-        if (sorteado.nome === "CUIDA") tf = `rotateX(${voltasExtra}deg) rotateY(${voltasExtra}deg)`;
-        else if (sorteado.nome === "RECOMEÇA") tf = `rotateX(${voltasExtra}deg) rotateY(${voltasExtra+180}deg)`;
-        else if (sorteado.nome === "ESCUTA") tf = `rotateX(${voltasExtra}deg) rotateY(${voltasExtra-90}deg)`;
-        else if (sorteado.nome === "EQUILIBRA") tf = `rotateX(${voltasExtra}deg) rotateY(${voltasExtra+90}deg)`;
-        else if (sorteado.nome === "ABRANDA") tf = `rotateX(${voltasExtra-90}deg) rotateY(${voltasExtra}deg)`;
-        else if (sorteado.nome === "RESPIRA") tf = `rotateX(${voltasExtra+90}deg) rotateY(${voltasExtra}deg)`;
-        cubo.style.transform = tf;
+    // Adicionar um chão/anel suave
+    const ringGeo = new THREE.RingGeometry(1.2, 1.6, 64);
+    const ringMat = new THREE.MeshStandardMaterial({
+      color: 0x3b82f6,
+      transparent: true,
+      opacity: 0.2,
+      side: THREE.DoubleSide
+    });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.rotation.x = -Math.PI / 2;
+    ring.position.y = -0.9;
+    scene.add(ring);
 
-        setTimeout(() => {
-          estadoAtual.textContent = `🎯 Resultado: ${sorteado.nome}`;
-          resultadoNome.textContent = sorteado.nome;
-          resultadoNome.style.color = sorteado.cor;
-          resultadoDescricao.textContent = sorteado.descricao;
-          resultadoDiv.style.display = "block";
-          btnGirar.disabled = false;
-          aGirar = false;
-        }, 3200);
+    // Luz ambiente suave ao redor
+    const glowPoints = new THREE.PointLight(0x4488ff, 0.3, 8);
+    glowPoints.position.set(0, 2, 0);
+    scene.add(glowPoints);
+
+    // ----- CONTROLE DE ROTAÇÃO -----
+    let isSpinning = false;
+    let currentRotation = 0;
+    const facesMap = [
+      'CUIDA', 'RECOMEÇA', 'ESCUTA', 'EQUILIBRA', 'ABRANDA', 'RESPIRA'
+    ];
+
+    function girarDado() {
+      if (isSpinning) return;
+      isSpinning = true;
+
+      // Escolher uma face aleatória
+      const idx = Math.floor(Math.random() * facesData.length);
+      const faceNome = facesData[idx].nome;
+      const faceDesc = facesData[idx].desc;
+      const faceCor = facesData[idx].cor;
+
+      // Calcular rotação para aquela face ficar para cima
+      // Cada face tem um eixo de rotação específico
+      const rotacoes = {
+        'CUIDA':    { x: 0, y: 0 },
+        'RECOMEÇA': { x: 0, y: Math.PI },
+        'ESCUTA':   { x: 0, y: -Math.PI/2 },
+        'EQUILIBRA':{ x: 0, y: Math.PI/2 },
+        'ABRANDA':  { x: -Math.PI/2, y: 0 },
+        'RESPIRA':  { x: Math.PI/2, y: 0 }
+      };
+
+      const rot = rotacoes[faceNome];
+      // Adicionar voltas extras para efeito de giro
+      const extraX = rot.x + (Math.random() * 8 + 4) * Math.PI * 2;
+      const extraY = rot.y + (Math.random() * 8 + 4) * Math.PI * 2;
+
+      // Animar rotação com GSAP (ou transição manual)
+      const startX = dice.rotation.x;
+      const startY = dice.rotation.y;
+      const duration = 2500;
+      const startTime = performance.now();
+
+      function animateRotation() {
+        const elapsed = performance.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Easing suave
+        const eased = 1 - Math.pow(1 - progress, 3);
+        
+        dice.rotation.x = startX + (extraX - startX) * eased;
+        dice.rotation.y = startY + (extraY - startY) * eased;
+
+        if (progress < 1) {
+          requestAnimationFrame(animateRotation);
+        } else {
+          dice.rotation.x = extraX;
+          dice.rotation.y = extraY;
+          isSpinning = false;
+          mostrarResultado(faceNome, faceDesc, faceCor);
+        }
       }
+      animateRotation();
+    }
 
-      function resetar() {
-        if (aGirar) return;
-        voltasExtra = 0;
-        cubo.style.transform = "rotateX(-90deg) rotateY(0deg)";
-        estadoAtual.textContent = "Dado parado — clica em 'Girar' para rodar.";
-        resultadoDiv.style.display = "none";
-        sorteadoAtual = null;
+    function mostrarResultado(nome, desc, cor) {
+      const el = document.getElementById('resultado');
+      const nomeEl = document.getElementById('faceNome');
+      const descEl = document.getElementById('faceDesc');
+      nomeEl.textContent = nome;
+      nomeEl.style.color = '#' + cor.toString(16).padStart(6, '0');
+      descEl.textContent = desc;
+      el.style.display = 'block';
+      setTimeout(() => {
+        el.style.display = 'none';
+      }, 6000);
+    }
+
+    // Evento de toque/clique
+    renderer.domElement.addEventListener('click', girarDado);
+    renderer.domElement.addEventListener('touchstart', girarDado);
+
+    // Controles para desktop (opcional, mas útil)
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.autoRotate = false;
+    controls.enableZoom = true;
+    controls.target.set(0, 0, 0);
+    controls.maxPolarAngle = Math.PI / 2;
+
+    // Ajustar para RV
+    function onResize() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      renderer.setSize(width, height);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+    }
+    window.addEventListener('resize', onResize);
+
+    // Loop de renderização
+    function animate() {
+      renderer.setAnimationLoop(() => {
+        // Se não estiver em RV, atualizar controles
+        if (!renderer.xr.isPresenting) {
+          controls.update();
+        }
+        renderer.render(scene, camera);
+      });
+    }
+    animate();
+
+    // Pequena rotação automática quando parado (opcional)
+    let idleRotation = 0;
+    setInterval(() => {
+      if (!isSpinning && !renderer.xr.isPresenting) {
+        idleRotation += 0.002;
+        // Não acumular muito
+        if (idleRotation > 0.1) idleRotation = 0;
+        dice.rotation.y += idleRotation * 0.5;
       }
+    }, 50);
 
-      btnGirar.addEventListener("click", girarCubo);
-      cubo.addEventListener("click", girarCubo);
-      btnReset.addEventListener("click", resetar);
-    })();
+    console.log('🧠 Dado da Saúde Mental em RV pronto!');
+    console.log('📱 Coloca o telemóvel nos óculos e diverte-te!');
   </script>
 </body>
 </html>
