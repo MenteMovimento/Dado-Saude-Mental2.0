@@ -128,8 +128,8 @@
     cameraGroup.position.set(0, 0, -5.5); // Distância do dado (5.5 unidades à frente)
     scene.add(cameraGroup);
 
-    // ----- CRIAR O DADO 3D COM IMAGENS + FRASES -----
-    const tamanho = 1.6;
+    // ----- CRIAR O DADO 3D COM IMAGENS + FRASES (TEXTO GRANDE) -----
+    const tamanho = 2.0; // AUMENTEI O TAMANHO DO DADO
     const geometry = new THREE.BoxGeometry(tamanho, tamanho, tamanho);
     
     // Mapeamento das faces com imagens e frases
@@ -142,7 +142,7 @@
       { nome: 'RECOMEÇA', frase: 'Tenta outra vez com calma',           imagem: 'recomeca.jpeg', cor: 0x009c9c }
     ];
 
-    // Função para gerar textura com imagem + frase abaixo
+    // Função para gerar textura com imagem + frase abaixo (TEXTO GRANDE)
     function gerarTextura(face) {
       return new Promise((resolve) => {
         const canvas = document.createElement('canvas');
@@ -165,23 +165,27 @@
         img.src = face.imagem;
 
         img.onload = () => {
-          // Desenhar a imagem no topo (60% da altura)
-          const imgSize = 550;
+          // Desenhar a imagem no topo
+          const imgSize = 480;
           const imgX = (1024 - imgSize) / 2;
-          const imgY = 80;
+          const imgY = 40;
           ctx.drawImage(img, imgX, imgY, imgSize, imgSize);
 
-          // Nome grande (centro)
+          // Nome grande (centro) - AUMENTEI
           ctx.fillStyle = '#' + face.cor.toString(16).padStart(6, '0');
-          ctx.font = 'bold 100px Segoe UI, Arial';
+          ctx.font = 'bold 130px Segoe UI, Arial';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillText(face.nome, 512, 660);
+          ctx.fillText(face.nome, 512, 620);
 
-          // Frase abaixo do nome
-          ctx.fillStyle = '#334155';
-          ctx.font = '42px Segoe UI, Arial';
-          ctx.fillText(face.frase, 512, 780);
+          // Frase abaixo do nome - AUMENTEI MUITO
+          ctx.fillStyle = '#1e293b';
+          ctx.font = 'bold 56px Segoe UI, Arial';
+          ctx.fillText(face.frase, 512, 770);
+
+          // Adicionar um pequeno ícone de "paz"
+          ctx.font = '50px Arial';
+          ctx.fillText('🧠', 512, 900);
 
           const texture = new THREE.CanvasTexture(canvas);
           const material = new THREE.MeshStandardMaterial({
@@ -196,14 +200,14 @@
         img.onerror = () => {
           // Fallback sem imagem
           ctx.fillStyle = '#' + face.cor.toString(16).padStart(6, '0');
-          ctx.font = 'bold 120px Segoe UI, Arial';
+          ctx.font = 'bold 160px Segoe UI, Arial';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText(face.nome, 512, 450);
           
-          ctx.fillStyle = '#334155';
-          ctx.font = '50px Segoe UI, Arial';
-          ctx.fillText(face.frase, 512, 600);
+          ctx.fillStyle = '#1e293b';
+          ctx.font = 'bold 60px Segoe UI, Arial';
+          ctx.fillText(face.frase, 512, 650);
 
           const texture = new THREE.CanvasTexture(canvas);
           const material = new THREE.MeshStandardMaterial({
@@ -283,7 +287,7 @@
         const faceFrase = facesData[idx].frase;
         const faceCor = facesData[idx].cor;
 
-        // Rotação para cada face ficar para cima (eixo Z porque o dado está à frente)
+        // Rotação para cada face ficar para cima
         const rotacoes = {
           'CUIDA':    { x: 0, y: 0 },
           'RECOMEÇA': { x: 0, y: Math.PI },
@@ -365,7 +369,7 @@
     }
     animate();
 
-    console.log('🧠 Dado da Saúde Mental - RV com frases!');
+    console.log('🧠 Dado da Saúde Mental - RV com frases GRANDES!');
     console.log('📱 Coloca o telemóvel nos óculos e diverte-te!');
   </script>
 </body>
