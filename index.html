@@ -128,7 +128,7 @@
     cameraGroup.position.set(0, 0, -5.5); // Distância do dado (5.5 unidades à frente)
     scene.add(cameraGroup);
 
-    // ----- CRIAR O DADO 3D COM IMAGENS + FRASES (TEXTO GRANDE) -----
+    // ----- CRIAR O DADO 3D COM IMAGENS + FRASES -----
     const tamanho = 2.0;
     const geometry = new THREE.BoxGeometry(tamanho, tamanho, tamanho);
     
@@ -173,14 +173,14 @@
 
           // Nome grande (centro)
           ctx.fillStyle = '#' + face.cor.toString(16).padStart(6, '0');
-          ctx.font = 'bold 130px Segoe UI, Arial';
+          ctx.font = 'bold 140px Segoe UI, Arial'; // Aumentei para 140px
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText(face.nome, 512, 620);
 
           // Frase abaixo do nome
           ctx.fillStyle = '#1e293b';
-          ctx.font = 'bold 56px Segoe UI, Arial';
+          ctx.font = 'bold 60px Segoe UI, Arial'; // Aumentei para 60px
           ctx.fillText(face.frase, 512, 770);
 
           ctx.font = '50px Arial';
@@ -223,6 +223,12 @@
     const promises = facesData.map(f => gerarTextura(f));
     Promise.all(promises).then((mats) => {
       const dice = new THREE.Mesh(geometry, mats);
+      
+      // ROTAÇÃO INICIAL CORRETA: face CUIDA virada para cima e para o utilizador
+      // Isto garante que o dado já nasce "em pé"
+      dice.rotation.x = 0;
+      dice.rotation.y = 0;
+      dice.rotation.z = 0;
       
       // Adicionar o dado ao grupo (fixo na visão)
       cameraGroup.add(dice);
@@ -276,7 +282,7 @@
         statusEl.textContent = '⚠️ Sensor não disponível. Usa toque no ecrã.';
       }
 
-      // Função para girar o dado (sempre para na face certa)
+      // Função para girar o dado (sempre para na face certa e em pé)
       function girarDado() {
         if (isSpinning) return;
         isSpinning = true;
@@ -287,20 +293,19 @@
         const faceCor = facesData[idx].cor;
 
         // Rotação EXATA para cada face ficar para cima (virada para o utilizador)
-        // IMPORTANTE: Usamos ângulos exatos (múltiplos de π/2) para parar sempre em pé
+        // Ajustei os ângulos para garantir que o dado fique sempre "em pé"
         const rotacoes = {
-          'CUIDA':    { x: 0, y: 0 },
-          'RECOMEÇA': { x: 0, y: Math.PI },
-          'ESCUTA':   { x: 0, y: -Math.PI/2 },
-          'EQUILIBRA':{ x: 0, y: Math.PI/2 },
-          'ABRANDA':  { x: -Math.PI/2, y: 0 },
-          'RESPIRA':  { x: Math.PI/2, y: 0 }
+          'CUIDA':    { x: 0, y: 0 },           // Face da frente (já está correta)
+          'RECOMEÇA': { x: 0, y: Math.PI },     // Face de trás
+          'ESCUTA':   { x: 0, y: -Math.PI/2 },  // Face direita
+          'EQUILIBRA':{ x: 0, y: Math.PI/2 },   // Face esquerda
+          'ABRANDA':  { x: -Math.PI/2, y: 0 },  // Face de cima
+          'RESPIRA':  { x: Math.PI/2, y: 0 }    // Face de baixo
         };
 
         const rot = rotacoes[faceNome];
         
         // Adicionar voltas extras (múltiplos de 2π) para efeito de giro
-        // Isso mantém a posição final EXATA
         const voltasX = Math.floor(Math.random() * 6) + 4; // 4 a 9 voltas
         const voltasY = Math.floor(Math.random() * 6) + 4;
         
@@ -309,7 +314,7 @@
 
         const startX = dice.rotation.x;
         const startY = dice.rotation.y;
-        const duration = 2500;
+        const duration = 2800; // Um pouco mais lento para efeito mais dramático
         const startTime = performance.now();
 
         function animateRotation() {
@@ -323,7 +328,7 @@
           if (progress < 1) {
             requestAnimationFrame(animateRotation);
           } else {
-            // Garantir que termina nos ângulos EXATOS (por causa de erros de floating point)
+            // Garantir que termina nos ângulos EXATOS
             dice.rotation.x = extraX;
             dice.rotation.y = extraY;
             isSpinning = false;
@@ -376,7 +381,7 @@
     }
     animate();
 
-    console.log('🧠 Dado da Saúde Mental - Sempre para em pé!');
+    console.log('🧠 Dado da Saúde Mental - Sempre em pé e bem enquadrado!');
     console.log('📱 Coloca o telemóvel nos óculos e diverte-te!');
   </script>
 </body>
