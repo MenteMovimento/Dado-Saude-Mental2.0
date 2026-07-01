@@ -125,11 +125,11 @@
 
     // ----- GRUPO QUE ACOMPANHA A CÂMARA (dado fixo na visão) -----
     const cameraGroup = new THREE.Group();
-    cameraGroup.position.set(0, 0, -5.5); // Distância do dado (5.5 unidades à frente)
+    cameraGroup.position.set(0, 0, -5.0); // Distância do dado (5.0 unidades à frente - mais perto)
     scene.add(cameraGroup);
 
-    // ----- CRIAR O DADO 3D COM IMAGENS + FRASES -----
-    const tamanho = 2.0;
+    // ----- CRIAR O DADO 3D COM IMAGENS + FRASES (TEXTO ENORME) -----
+    const tamanho = 2.4; // DADO MAIOR (2.4)
     const geometry = new THREE.BoxGeometry(tamanho, tamanho, tamanho);
     
     // Mapeamento das faces com imagens e frases
@@ -142,7 +142,7 @@
       { nome: 'RECOMEÇA', frase: 'Tenta outra vez com calma',           imagem: 'recomeca.jpeg', cor: 0x009c9c }
     ];
 
-    // Função para gerar textura com imagem + frase abaixo
+    // Função para gerar textura com imagem + frase abaixo (TEXTO ENORME)
     function gerarTextura(face) {
       return new Promise((resolve) => {
         const canvas = document.createElement('canvas');
@@ -165,26 +165,27 @@
         img.src = face.imagem;
 
         img.onload = () => {
-          // Desenhar a imagem no topo
-          const imgSize = 480;
+          // Desenhar a imagem no topo (um pouco menor para dar espaço ao texto)
+          const imgSize = 400;
           const imgX = (1024 - imgSize) / 2;
           const imgY = 40;
           ctx.drawImage(img, imgX, imgY, imgSize, imgSize);
 
-          // Nome grande (centro)
+          // Nome ENORME (centro)
           ctx.fillStyle = '#' + face.cor.toString(16).padStart(6, '0');
-          ctx.font = 'bold 140px Segoe UI, Arial'; // Aumentei para 140px
+          ctx.font = 'bold 170px Segoe UI, Arial'; // 170px
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillText(face.nome, 512, 620);
+          ctx.fillText(face.nome, 512, 580);
 
-          // Frase abaixo do nome
+          // Frase ENORME abaixo do nome
           ctx.fillStyle = '#1e293b';
-          ctx.font = 'bold 60px Segoe UI, Arial'; // Aumentei para 60px
-          ctx.fillText(face.frase, 512, 770);
+          ctx.font = 'bold 72px Segoe UI, Arial'; // 72px
+          ctx.fillText(face.frase, 512, 730);
 
-          ctx.font = '50px Arial';
-          ctx.fillText('🧠', 512, 900);
+          // Ícone
+          ctx.font = '60px Arial';
+          ctx.fillText('🧠', 512, 870);
 
           const texture = new THREE.CanvasTexture(canvas);
           const material = new THREE.MeshStandardMaterial({
@@ -199,13 +200,13 @@
         img.onerror = () => {
           // Fallback sem imagem
           ctx.fillStyle = '#' + face.cor.toString(16).padStart(6, '0');
-          ctx.font = 'bold 160px Segoe UI, Arial';
+          ctx.font = 'bold 180px Segoe UI, Arial';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText(face.nome, 512, 450);
           
           ctx.fillStyle = '#1e293b';
-          ctx.font = 'bold 60px Segoe UI, Arial';
+          ctx.font = 'bold 80px Segoe UI, Arial';
           ctx.fillText(face.frase, 512, 650);
 
           const texture = new THREE.CanvasTexture(canvas);
@@ -225,7 +226,6 @@
       const dice = new THREE.Mesh(geometry, mats);
       
       // ROTAÇÃO INICIAL CORRETA: face CUIDA virada para cima e para o utilizador
-      // Isto garante que o dado já nasce "em pé"
       dice.rotation.x = 0;
       dice.rotation.y = 0;
       dice.rotation.z = 0;
@@ -293,14 +293,13 @@
         const faceCor = facesData[idx].cor;
 
         // Rotação EXATA para cada face ficar para cima (virada para o utilizador)
-        // Ajustei os ângulos para garantir que o dado fique sempre "em pé"
         const rotacoes = {
-          'CUIDA':    { x: 0, y: 0 },           // Face da frente (já está correta)
-          'RECOMEÇA': { x: 0, y: Math.PI },     // Face de trás
-          'ESCUTA':   { x: 0, y: -Math.PI/2 },  // Face direita
-          'EQUILIBRA':{ x: 0, y: Math.PI/2 },   // Face esquerda
-          'ABRANDA':  { x: -Math.PI/2, y: 0 },  // Face de cima
-          'RESPIRA':  { x: Math.PI/2, y: 0 }    // Face de baixo
+          'CUIDA':    { x: 0, y: 0 },
+          'RECOMEÇA': { x: 0, y: Math.PI },
+          'ESCUTA':   { x: 0, y: -Math.PI/2 },
+          'EQUILIBRA':{ x: 0, y: Math.PI/2 },
+          'ABRANDA':  { x: -Math.PI/2, y: 0 },
+          'RESPIRA':  { x: Math.PI/2, y: 0 }
         };
 
         const rot = rotacoes[faceNome];
@@ -314,7 +313,7 @@
 
         const startX = dice.rotation.x;
         const startY = dice.rotation.y;
-        const duration = 2800; // Um pouco mais lento para efeito mais dramático
+        const duration = 2800;
         const startTime = performance.now();
 
         function animateRotation() {
@@ -373,7 +372,7 @@
       renderer.setAnimationLoop(() => {
         // O grupo acompanha a câmara automaticamente
         cameraGroup.position.copy(camera.position);
-        cameraGroup.position.z -= 5.5; // Distância fixa à frente
+        cameraGroup.position.z -= 5.0; // Distância fixa à frente (mais perto)
         cameraGroup.rotation.copy(camera.rotation);
         
         renderer.render(scene, camera);
@@ -381,7 +380,7 @@
     }
     animate();
 
-    console.log('🧠 Dado da Saúde Mental - Sempre em pé e bem enquadrado!');
+    console.log('🧠 Dado da Saúde Mental - Texto ENORME!');
     console.log('📱 Coloca o telemóvel nos óculos e diverte-te!');
   </script>
 </body>
