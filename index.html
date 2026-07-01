@@ -129,7 +129,7 @@
     scene.add(cameraGroup);
 
     // ----- CRIAR O DADO 3D COM IMAGENS + FRASES (TEXTO GRANDE) -----
-    const tamanho = 2.0; // AUMENTEI O TAMANHO DO DADO
+    const tamanho = 2.0;
     const geometry = new THREE.BoxGeometry(tamanho, tamanho, tamanho);
     
     // Mapeamento das faces com imagens e frases
@@ -142,7 +142,7 @@
       { nome: 'RECOMEÇA', frase: 'Tenta outra vez com calma',           imagem: 'recomeca.jpeg', cor: 0x009c9c }
     ];
 
-    // Função para gerar textura com imagem + frase abaixo (TEXTO GRANDE)
+    // Função para gerar textura com imagem + frase abaixo
     function gerarTextura(face) {
       return new Promise((resolve) => {
         const canvas = document.createElement('canvas');
@@ -171,19 +171,18 @@
           const imgY = 40;
           ctx.drawImage(img, imgX, imgY, imgSize, imgSize);
 
-          // Nome grande (centro) - AUMENTEI
+          // Nome grande (centro)
           ctx.fillStyle = '#' + face.cor.toString(16).padStart(6, '0');
           ctx.font = 'bold 130px Segoe UI, Arial';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText(face.nome, 512, 620);
 
-          // Frase abaixo do nome - AUMENTEI MUITO
+          // Frase abaixo do nome
           ctx.fillStyle = '#1e293b';
           ctx.font = 'bold 56px Segoe UI, Arial';
           ctx.fillText(face.frase, 512, 770);
 
-          // Adicionar um pequeno ícone de "paz"
           ctx.font = '50px Arial';
           ctx.fillText('🧠', 512, 900);
 
@@ -277,7 +276,7 @@
         statusEl.textContent = '⚠️ Sensor não disponível. Usa toque no ecrã.';
       }
 
-      // Função para girar o dado
+      // Função para girar o dado (sempre para na face certa)
       function girarDado() {
         if (isSpinning) return;
         isSpinning = true;
@@ -287,7 +286,8 @@
         const faceFrase = facesData[idx].frase;
         const faceCor = facesData[idx].cor;
 
-        // Rotação para cada face ficar para cima
+        // Rotação EXATA para cada face ficar para cima (virada para o utilizador)
+        // IMPORTANTE: Usamos ângulos exatos (múltiplos de π/2) para parar sempre em pé
         const rotacoes = {
           'CUIDA':    { x: 0, y: 0 },
           'RECOMEÇA': { x: 0, y: Math.PI },
@@ -298,8 +298,14 @@
         };
 
         const rot = rotacoes[faceNome];
-        const extraX = rot.x + (Math.random() * 6 + 3) * Math.PI * 2;
-        const extraY = rot.y + (Math.random() * 6 + 3) * Math.PI * 2;
+        
+        // Adicionar voltas extras (múltiplos de 2π) para efeito de giro
+        // Isso mantém a posição final EXATA
+        const voltasX = Math.floor(Math.random() * 6) + 4; // 4 a 9 voltas
+        const voltasY = Math.floor(Math.random() * 6) + 4;
+        
+        const extraX = rot.x + voltasX * Math.PI * 2;
+        const extraY = rot.y + voltasY * Math.PI * 2;
 
         const startX = dice.rotation.x;
         const startY = dice.rotation.y;
@@ -317,6 +323,7 @@
           if (progress < 1) {
             requestAnimationFrame(animateRotation);
           } else {
+            // Garantir que termina nos ângulos EXATOS (por causa de erros de floating point)
             dice.rotation.x = extraX;
             dice.rotation.y = extraY;
             isSpinning = false;
@@ -369,7 +376,7 @@
     }
     animate();
 
-    console.log('🧠 Dado da Saúde Mental - RV com frases GRANDES!');
+    console.log('🧠 Dado da Saúde Mental - Sempre para em pé!');
     console.log('📱 Coloca o telemóvel nos óculos e diverte-te!');
   </script>
 </body>
